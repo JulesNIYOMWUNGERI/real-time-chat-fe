@@ -49,7 +49,7 @@ export const useAuthStore = create((set) => ({
         }
     },
 
-    logout: async () => {
+    logout: async() => {
         try {
             await axiosInstance.post("/auth/logout");
             set({ authUser: null });
@@ -57,5 +57,9 @@ export const useAuthStore = create((set) => ({
         } catch (error: any) {
             toast.error(error.response.data.message);
         }
-    }
+    },
+
+    updateProfile: async(data: { profilePic: string }) => {
+
+    },
 }));
