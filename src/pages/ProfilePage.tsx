@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore';
 import { Camera, Mail, User } from 'lucide-react';
 
 const ProfilePage = () => {
-    const { authUser, isUpdatingProfile, updateProfile } = useAuthStore() as { authUser: any, isUpdatingProfile: boolean, updateProfile: (data: { profilePic: string }) => void };
+  const [selectedImg, setSelectedImg] = useState<string | ArrayBuffer | null>(null);
+  const { authUser, isUpdatingProfile, updateProfile } = useAuthStore() as { authUser: any, isUpdatingProfile: boolean, updateProfile: (data: { profilePic: any }) => void };
 
-    const handleImageUpload = async (e: any) => {}
+  const handleImageUpload = async (e: any) => {
+    const file = e.target.files[0];
+    if(!file) return;
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = async () => {
+      const base64Image = reader.result;
+      setSelectedImg(base64Image);
+
+      await updateProfile({ profilePic: base64Image });
+    }
+  }
 
   return (
     <div className="h-screen pt-20">
@@ -20,7 +35,7 @@ const ProfilePage = () => {
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
               <img
-                src={authUser.profilePic || "/avatar.png"}
+                src={selectedImg || authUser.profilePic || "/avatar.png"}
                 alt="Profile"
                 className="size-32 rounded-full object-cover border-4"
               />
