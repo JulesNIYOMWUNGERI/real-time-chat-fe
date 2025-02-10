@@ -21,7 +21,6 @@ export const useAuthStore = create((set, get) => ({
             set({ authUser: res.data });
             (get() as any).connectSocket();
         } catch (error) {
-            console.log("Error in checkAuth:", error);
             set({ authUser: null });
         } finally {
             set({ isCheckingAuth: false });
@@ -77,7 +76,6 @@ export const useAuthStore = create((set, get) => ({
             set({ authUser: res.data });
             toast.success("Profile updated successfully");
         } catch (error: any) {
-            console.log("error in update profile: ============>>>>>", error);
             toast.error(error.response.data.message || error.message);
         } finally {
             set({ isUpdatingProfile: false });

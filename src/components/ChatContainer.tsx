@@ -50,10 +50,6 @@ const ChatContainer = () => {
     );
   }
 
-  console.log(messages, '================================')
-  console.log(authUser, '============00000000000====================')
-  console.log(selectedUser, '============selectedUser====================')
-
   return (
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
